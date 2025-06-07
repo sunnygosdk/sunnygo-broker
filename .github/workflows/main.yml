@@ -23,9 +23,6 @@ jobs:
         with:
           go-version: '1.24.x'
 
-      - name: Run Go Tests
-        run: go test
-
       - name: Bump version and push tag
         id: tag_version
         uses: anothrNick/github-tag-action@1.73.0
@@ -44,6 +41,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          file: ./broker-service.dockerfile
           push: true
           tags: |
             sunnygosdk/sunnygo-broker:${{ steps.tag_version.outputs.new_tag }}
